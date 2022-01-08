@@ -1,0 +1,25 @@
+group 'com.ang.sec'
+apply plugin: "java"
+apply plugin: "application"
+
+version '1.0-SNAPSHOT'
+
+
+sourceCompatibility = 1.8
+
+repositories {
+
+    maven { url "" }
+}
+
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'dom4j', name: 'dom4j', version: '1.6.1'
+    compile group: "com.alibaba", name: "fastjson", version:"1.2.47"
+    compile group: 'jaxen', name: 'jaxen', version: '1.2.0'
+}
+
+task foo {
+    ant.get(src: 'https://www.redhat.com/security/data/oval/Red_Hat_Enterprise_Linux_7.xml', dest: 'src/main/resources/')
+}
