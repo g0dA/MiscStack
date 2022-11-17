@@ -47,16 +47,21 @@
 
 step.1
 kubectl 向 k8s api server 发起一个create pod 请求(即我们使用Kubectl敲一个create pod命令) 。
+
 step.2
 k8s api server接收到pod创建请求后，不会去直接创建pod；而是生成一个包含创建信息的yaml。
+
 step.3
 apiserver 将刚才的yaml信息写入etcd数据库。到此为止仅仅是在etcd中添加了一条记录， 还没有任何的实质性进展。
+
 step.4
 scheduler 查看 k8s api ，类似于通知机制。
 首先判断：pod.spec.Node == null?
 若为null，表示这个Pod请求是新来的，需要创建；因此先进行调度计算，找到最“闲”的node。
 然后将信息在etcd数据库中更新分配结果：pod.spec.Node = nodeA (设置一个具体的节点)
+
 ps:同样上述操作的各种信息也要写到etcd数据库中中。
+
 step.5
 kubelet 通过监测etcd数据库(即不停地看etcd中的记录)，发现 k8s api server 中有了个新的Node；
 如果这条记录中的Node与自己的编号相同(即这个Pod由scheduler分配给自己了)；
